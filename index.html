@@ -775,6 +775,7 @@ let fileLoaded = false;
 
 // ── FILE LOADING ───────────────────────────────────────────────────────────
 function parseEntries(text) {
+  const seen = new Set();
   return text.split('\n')
     .map(l => l.trim())
     .filter(l => l.length > 0)
@@ -785,6 +786,12 @@ function parseEntries(text) {
         url:  parts[1] ?? null,
         isNR: parts[2] ?? null
       };
+    })
+    .filter(entry => {
+      const key = entry.name ? entry.name.toLowerCase() : '';
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
     });
 }
 
