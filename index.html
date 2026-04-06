@@ -779,11 +779,11 @@ function parseEntries(text) {
     .map(l => l.trim())
     .filter(l => l.length > 0)
     .map(line => {
-      const comma = line.indexOf(',');
-      if (comma === -1) return { name: line, url: null };
+      const parts = line.split(',').map(p => p.trim());
       return {
-        name: line.slice(0, comma).trim(),
-        url:  line.slice(comma + 1).trim()
+        name: parts[0] ?? null,
+        url:  parts[1] ?? null,
+        isNR: parts[2] ?? null
       };
     });
 }

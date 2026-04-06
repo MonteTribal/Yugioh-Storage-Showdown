@@ -21,8 +21,8 @@ def main():
     # Read the file
     try:
         with open(data_file, "r", encoding="utf-8") as f:
-ygoproddeck
-lines = [line.strip() for line in f if line.strip()]
+
+            lines = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
         print(f"Error: Could not find '{data_file}'.")
         print("Make sure 'Lockers.txt' is in the same directory as this script.")
@@ -39,11 +39,13 @@ lines = [line.strip() for line in f if line.strip()]
     # Display results
     print(f"\nHere are your {count} randomly selected item(s):\n")
     for i, line in enumerate(chosen, 1):
-        parts = line.split(",", 1)
+        parts = line.split(",", 2)
         name = parts[0].strip()
         url  = parts[1].strip() if len(parts) > 1 else "(no URL)"
+        isNR  = parts[2].strip() if len(parts) > 2 else "(no rarity)"
         print(f"  {i}. {name}")
         print(f"     {url}")
+        print(f"     {"no SR/UR reqs" if isNR else ""}")
 
 if __name__ == "__main__":
     main()
