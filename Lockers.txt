@@ -42,3 +42,5 @@ Squirrel Format Reference, https://www.duelingbook.com/deck?id=19885372, True
 Zone Eater, https://www.duelingbook.com/deck?id=19885394, True
 King of the Trash, https://www.duelingbook.com/deck?id=19885436, True
 Kuriboh, https://www.duelingbook.com/deck?id=19885649, True
+Six Seven, https://www.duelingbook.com/deck?id=19885807, True
+Pay 8 Feel Gr8, https://www.duelingbook.com/deck?id=19885842, True
