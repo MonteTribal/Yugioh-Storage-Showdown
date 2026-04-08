@@ -713,12 +713,14 @@
       <div class="info-modal-tag">// FORMAT BRIEFING</div>
       <h2 class="info-modal-title">What is Jumpstart?</h2>
       <div class="info-modal-body">
-        <p>Jumpstart is a Magic: The Gathering format where players grab <strong>two themed 20-card booster packs</strong>, build your deck and instantly have a ready-to-play 40-card deck — no deckbuilding required.</p>
+        <p>Jumpstart is a Magic: The Gathering format where players grab <strong>two themed 20-card booster packs</strong>, build your deck and instantly have a ready-to-play 40-card deck - no deckbuilding required.</p>
         <p>Each pack is built around a single theme (like "Goblins", "Angels", or "Pirates"). Pick two or more themes, find unexpected synergies and a unique deck almost every game.</p>
         <div class="info-rule-box">
           <div class="info-rule-label">// THIS FORMAT</div>
-          <p>Instead of booster packs, each "Locker" in Storage Showdown holds a curated set of themed cards. Randomly unlock <strong>2, 3, or 4</strong> of them — pick your favorites, shuffle up, and duel.</p>
-          <p>Find me in the NR Deck Repo or the Boss Stage, to suggest new Locker ideas</p>
+          <p>Instead of booster packs, each "Locker" in Storage Showdown holds a curated set of themed cards. Randomly unlock <strong>2, 3, or 4</strong> of them: pick the best cards, shuffle up, and duel.</p>
+          <p>2 is Hard Mode, 4 is Easy Mode.</p>
+          <p>Find me (MonteTribal) in the NR Deck Repo or the Boss Stage, to suggest new Locker ideas!</p>
+          <p>(At present, only NR packs are included. I plan on adding options to include higher rarity in the future)</p>
         </div>
         <a href="https://mtg.fandom.com/wiki/Jumpstart" target="_blank" rel="noopener" class="info-modal-link">Read more on MTG Wiki ↗</a>
       </div>
@@ -738,6 +740,11 @@
         <button class="count-btn" data-val="3">3</button>
         <button class="count-btn" data-val="4">4</button>
       </div>
+    </div>
+
+    <div class="panel-row" style="margin-top: 16px;">
+      <span class="panel-label">Freebies? <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;">(coward mode)</span></span>
+      <button id="freebiesBtn" class="count-btn" style="width:auto;padding:0 16px;font-size:14px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;" aria-pressed="false">OFF</button>
     </div>
 
     <button id="openBtn" disabled>⚡ OPEN LOCKERS</button>
@@ -772,6 +779,8 @@
 let entries = [];       // [{name, url}]
 let chosenCount = 2;
 let fileLoaded = false;
+let useFreebies = false;
+const FREEBIES_URL = 'https://www.duelingbook.com/deck?id=19898808';
 
 // ── FILE LOADING ───────────────────────────────────────────────────────────
 function parseEntries(text) {
@@ -827,6 +836,14 @@ document.querySelectorAll('.count-btn').forEach(btn => {
 });
 // default select 2
 document.querySelector('.count-btn[data-val="2"]').classList.add('active');
+
+// ── FREEBIES TOGGLE ────────────────────────────────────────────────────────
+document.getElementById('freebiesBtn').addEventListener('click', function() {
+  useFreebies = !useFreebies;
+  this.textContent = useFreebies ? 'ON' : 'OFF';
+  this.classList.toggle('active', useFreebies);
+  this.setAttribute('aria-pressed', useFreebies);
+});
 
 function updateBtn() {
   const btn = document.getElementById('openBtn');
@@ -1021,6 +1038,21 @@ document.getElementById('openBtn').addEventListener('click', async function() {
   }
 
   setStatus(`${chosenCount} LOCKER${chosenCount > 1 ? 'S' : ''} OPENED SUCCESSFULLY`, 'ok');
+
+  // Show freebies if coward mode is on
+  const existingFreebies = document.getElementById('freebiesResult');
+  if (existingFreebies) existingFreebies.remove();
+  if (useFreebies) {
+    const freebiesEl = document.createElement('div');
+    freebiesEl.id = 'freebiesResult';
+    freebiesEl.style.cssText = 'margin-top:16px;padding:16px 20px;background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--yellow);font-family:"Share Tech Mono",monospace;font-size:12px;';
+    freebiesEl.innerHTML = `
+      <div style="color:var(--yellow);letter-spacing:3px;font-size:10px;margin-bottom:8px;">// FREEBIES — COWARD MODE ACTIVE</div>
+      <a href="${FREEBIES_URL}" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none;letter-spacing:1px;">${FREEBIES_URL}</a>
+    `;
+    resultsEl.appendChild(freebiesEl);
+  }
+
   btn.disabled = false;
   btn.textContent = '⚡ OPEN LOCKERS';
 });
