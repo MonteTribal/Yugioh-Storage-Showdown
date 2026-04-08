@@ -178,6 +178,27 @@
     box-shadow: 0 0 16px rgba(255,107,0,.5);
   }
 
+  .freebies-btn {
+    height: 44px;
+    background: var(--metal);
+    border: 1px solid var(--border);
+    color: var(--dim);
+    cursor: pointer;
+    transition: all .15s;
+  }
+
+  .freebies-btn:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+
+  .freebies-btn.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #000;
+    box-shadow: 0 0 16px rgba(255,107,0,.5);
+  }
+
   /* ── OPEN BUTTON ── */
   #openBtn {
     display: block;
@@ -743,8 +764,8 @@
     </div>
 
     <div class="panel-row" style="margin-top: 16px;">
-      <span class="panel-label">Freebies? <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:1px;">(coward mode)</span></span>
-      <button id="freebiesBtn" class="count-btn" style="width:auto;padding:0 16px;font-size:14px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;" aria-pressed="false">OFF</button>
+      <span class="panel-label">Freebies? <span style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--dim);letter-spacing:1px;">(coward mode)</span></span>
+      <button id="freebiesBtn" class="freebies-btn" style="width:auto;padding:0 16px;font-size:14px;font-family:'Share Tech Mono',monospace;letter-spacing:2px;" aria-pressed="false">OFF</button>
     </div>
 
     <button id="openBtn" disabled>⚡ OPEN LOCKERS</button>
@@ -826,9 +847,9 @@ fetch('Lockers.txt')
   });
 
 // ── COUNT BUTTONS ──────────────────────────────────────────────────────────
-document.querySelectorAll('.count-btn').forEach(btn => {
+document.querySelectorAll('.count-btn[data-val]').forEach(btn => {
   btn.addEventListener('click', function() {
-    document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.count-btn[data-val]').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
     chosenCount = parseInt(this.dataset.val);
     updateBtn();
